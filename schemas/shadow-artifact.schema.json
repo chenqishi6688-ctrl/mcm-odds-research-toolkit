@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.codex/mcm/next-phase-shadow-v1.schema.json",
+  "title": "MCM v1.7+ observe-only shadow artifact",
+  "type": "object",
+  "required": ["schema_version", "engine_version", "mode", "status", "uses_audited_market", "stable_weights_changed", "probability_delta_applied", "live_ranking_changed", "experiment_manifest", "candidate_models", "uncertainty", "capital_threshold_shadow"],
+  "properties": {
+    "schema_version": {"const": "mcm-next-phase-shadow/v1"},
+    "engine_version": {"enum": ["1.7.0-shadow", "1.8.0-shadow"]},
+    "mode": {"const": "observe_only"},
+    "status": {"const": "available"},
+    "uses_audited_market": {"const": false},
+    "stable_weights_changed": {"const": false},
+    "probability_delta_applied": {"const": 0},
+    "live_ranking_changed": {"const": false},
+    "experiment_manifest": {"type": "object", "required": ["registered", "promotion_eligible"], "properties": {"promotion_eligible": {"const": false}}},
+    "candidate_models": {"type": "object", "minProperties": 3},
+    "uncertainty": {"type": "object"},
+    "capital_threshold_shadow": {"type": "object", "required": ["mode", "applied", "calibration_required", "probability_delta_applied"], "properties": {"mode": {"const": "observe_only"}, "applied": {"const": false}, "calibration_required": {"const": true}, "probability_delta_applied": {"const": 0}}}
+  },
+  "additionalProperties": true
+}
+

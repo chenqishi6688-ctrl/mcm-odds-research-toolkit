@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.codex/mcm/sporting-history-v1.schema.json",
+  "title": "MCM provider-neutral sporting history",
+  "type": "object",
+  "required": ["schema_version", "uses_audited_market", "provider", "retrieved_at", "freeze_time", "event", "completed_matches"],
+  "properties": {
+    "schema_version": {"const": "mcm-sporting-history/v1"},
+    "uses_audited_market": {"const": false},
+    "provider": {"type": "string", "minLength": 1},
+    "retrieved_at": {"type": "string", "format": "date-time"},
+    "freeze_time": {"type": "string", "format": "date-time"},
+    "event": {
+      "type": "object",
+      "required": ["id", "home", "away", "kickoff", "horizon"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "home": {"type": "string", "minLength": 1},
+        "away": {"type": "string", "minLength": 1},
+        "kickoff": {"type": "string", "format": "date-time"},
+        "horizon": {"const": "90m"},
+        "home_provider_id": {"type": "string"},
+        "away_provider_id": {"type": "string"},
+        "competition_provider_id": {"type": "string"},
+        "competition_code": {"type": "string"},
+        "season_provider_id": {"type": "string"},
+        "season_start": {"type": "string"},
+        "season_end": {"type": "string"},
+        "liquidity_tier": {"enum": ["high", "medium", "low", "unknown"]}
+      },
+      "additionalProperties": true
+    },
+    "completed_matches": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "kickoff", "status", "home", "away", "home_goals", "away_goals"],
+        "properties": {
+          "id": {"type": "string", "minLength": 1},
+          "kickoff": {"type": "string", "format": "date-time"},
+          "status": {"const": "FINISHED"},
+          "home": {"type": "string", "minLength": 1},
+          "away": {"type": "string", "minLength": 1},
+          "home_goals": {"type": "integer", "minimum": 0},
+          "away_goals": {"type": "integer", "minimum": 0},
+          "half_time_home_goals": {"type": ["integer", "null"], "minimum": 0},
+          "half_time_away_goals": {"type": ["integer", "null"], "minimum": 0},
+          "home_provider_id": {"type": ["string", "null"]},
+          "away_provider_id": {"type": ["string", "null"]},
+          "competition_provider_id": {"type": ["string", "null"]},
+          "competition_code": {"type": ["string", "null"]},
+          "season_provider_id": {"type": ["string", "null"]},
+          "season_start": {"type": ["string", "null"]},
+          "season_end": {"type": ["string", "null"]},
+          "stage": {"type": ["string", "null"]},
+          "group": {"type": ["string", "null"]},
+          "matchday": {"type": ["integer", "string", "null"]}
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": true
+}
+

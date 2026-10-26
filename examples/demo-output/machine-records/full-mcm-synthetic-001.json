@@ -1,0 +1,693 @@
+{
+  "schema_version": "1.6.3",
+  "engine_version": "1.6.3+evidence1",
+  "event": {
+    "id": "full-mcm-synthetic-001",
+    "home": "Synthetic Home",
+    "away": "Synthetic Away",
+    "kickoff": "2026-10-10T20:00:00+08:00",
+    "timezone": "Asia/Shanghai",
+    "horizon": "90m"
+  },
+  "report_status": "MCM-DEGRADED",
+  "status_reasons": [
+    "meaningful cross-book coverage incomplete",
+    "late observation missing",
+    "declared monitoring checkpoints incomplete",
+    "monitoring configuration and snapshot proofs absent"
+  ],
+  "data_quality": {
+    "grade": "B",
+    "independent_baseline_available": true,
+    "cross_book_available": false,
+    "late_snapshot_available": false,
+    "required_checkpoints": 0,
+    "captured_checkpoints": 0,
+    "blockers": [],
+    "sources": [
+      "synthetic team-performance feed",
+      "synthetic league environment",
+      "synthetic book A",
+      "synthetic book B"
+    ]
+  },
+  "monitoring_evidence": null,
+  "monitoring_audit": {
+    "status": "unverified",
+    "required_checkpoints": 0,
+    "captured_checkpoints": 0,
+    "late_snapshot_available": false,
+    "cross_book_available": false,
+    "last_valid_bookmaker_count": 0,
+    "checkpoint_results": [],
+    "reasons": [
+      "monitoring configuration and snapshot proofs absent"
+    ]
+  },
+  "probabilities": {
+    "market_implied": {
+      "one_x_two": {
+        "home": 0.5013679857749216,
+        "draw": 0.26786284671384286,
+        "away": 0.23076916751123558
+      },
+      "goal_bands": {
+        "0-1": 0.1714217324458438,
+        "2-3": 0.44282413161359224,
+        "4-6": 0.3426685447565388,
+        "7+": 0.04308559118402518
+      },
+      "three_way_handicaps": [],
+      "method": "equal-weight latest-per-book proportional de-vig for 1X2 and observed three-way handicap; exact-total aggregation when available",
+      "freeze_time": "2026-10-10T10:30:00+08:00",
+      "audited_market_used": true,
+      "book_count": 2,
+      "unavailable_fields": {},
+      "market_structure": [
+        {
+          "bookmaker": "synthetic-book-a",
+          "observed_at": "2026-10-10T10:00:00+08:00",
+          "prices": {
+            "home": 1.9,
+            "draw": 3.6,
+            "away": 4.2
+          }
+        },
+        {
+          "bookmaker": "synthetic-book-b",
+          "observed_at": "2026-10-10T10:30:00+08:00",
+          "prices": {
+            "home": 1.92,
+            "draw": 3.55,
+            "away": 4.1
+          }
+        }
+      ]
+    },
+    "independent_baseline": {
+      "one_x_two": {
+        "home": 0.5705935767055744,
+        "draw": 0.2286171969330123,
+        "away": 0.2007892263614134
+      },
+      "goal_bands": {
+        "0-1": 0.23175082501676622,
+        "2-3": 0.4610642440199565,
+        "4-6": 0.28293458140213307,
+        "7+": 0.024250349561144132
+      },
+      "three_way_handicaps": [
+        {
+          "side": "home",
+          "line": -1,
+          "probabilities": {
+            "side_win": 0.3269837726164784,
+            "handicap_draw": 0.24360980408909594,
+            "side_loss": 0.4294064232944257
+          }
+        }
+      ],
+      "method": "league-normalised independent Poisson score matrix",
+      "freeze_time": "2026-10-10T09:00:00+08:00",
+      "audited_market_used": false
+    },
+    "mcm_adjusted": {
+      "one_x_two": {
+        "home": 0.5905935767055746,
+        "draw": 0.21861719693301218,
+        "away": 0.19078922636141318
+      },
+      "goal_bands": {
+        "0-1": 0.22999299799030182,
+        "2-3": 0.4608678151772744,
+        "4-6": 0.28448569153458936,
+        "7+": 0.02465349529783441
+      },
+      "three_way_handicaps": [
+        {
+          "side": "home",
+          "line": -1,
+          "probabilities": {
+            "side_win": 0.3384449522008815,
+            "handicap_draw": 0.25214862450469266,
+            "side_loss": 0.40940642329442567
+          }
+        }
+      ],
+      "method": "independent score matrix reweighted only by frozen non-market sporting adjustments",
+      "freeze_time": "2026-10-10T12:00:00+08:00",
+      "audited_market_used": false,
+      "adjustment_audit": {
+        "status": "applied",
+        "delta_one_x_two": {
+          "home": 0.02,
+          "draw": -0.01,
+          "away": -0.01
+        },
+        "reason": "frozen non-market sporting evidence"
+      }
+    }
+  },
+  "baseline_provenance": {
+    "input_mode": "preaggregated",
+    "method": "league-normalised independent Poisson score matrix",
+    "market_independence": "validated_input_contract",
+    "source_records": [
+      {
+        "source": "synthetic team-performance feed",
+        "observed_at": "2026-10-10T08:00:00+08:00",
+        "ingested_at": "2026-10-10T08:01:00+08:00",
+        "metric_group": "team-form"
+      },
+      {
+        "source": "synthetic league environment",
+        "observed_at": "2026-10-10T08:10:00+08:00",
+        "ingested_at": "2026-10-10T08:11:00+08:00",
+        "metric_group": "league-environment"
+      }
+    ],
+    "sample_sizes": null,
+    "unavailable_reason": "preaggregated input did not disclose builder sample audit"
+  },
+  "ordinary_1x2_coverage": {
+    "status": "observed",
+    "candidate_pool_complete": true,
+    "source_timestamp": "2026-10-10T12:00:00+08:00",
+    "reason": "verified ordinary 1X2 is fully represented"
+  },
+  "three_way_handicap_coverage": {
+    "status": "observed",
+    "observed_markets": [
+      {
+        "side": "home",
+        "line": -1
+      }
+    ],
+    "candidate_pool_complete": true,
+    "source_timestamp": "2026-10-10T12:00:00+08:00",
+    "reason": "verified offers are fully represented"
+  },
+  "candidate_pool_scope": "unified",
+  "unified_ranking": [
+    {
+      "market_type": "1X2",
+      "selection": "home",
+      "probability": 0.5905935767055746,
+      "covered_paths": [
+        "90m_home"
+      ],
+      "rank": 1,
+      "model_probability_rank": 1,
+      "probability_source": "mcm_adjusted_score_matrix",
+      "evidence_grade": "B",
+      "strongest_contradiction": "model uncertainty and unobserved late information",
+      "capital_tiebreak": false
+    },
+    {
+      "market_type": "three_way_handicap",
+      "selection": "home_-1_side_loss",
+      "probability": 0.40940642329442567,
+      "covered_paths": [
+        "主队90分钟净胜球 -1 < 0"
+      ],
+      "handicap": {
+        "side": "home",
+        "line": -1,
+        "outcome": "side_loss"
+      },
+      "rank": 2,
+      "model_probability_rank": 2,
+      "probability_source": "mcm_adjusted_score_matrix",
+      "evidence_grade": "B",
+      "strongest_contradiction": "model uncertainty and unobserved late information",
+      "capital_tiebreak": false
+    },
+    {
+      "market_type": "three_way_handicap",
+      "selection": "home_-1_side_win",
+      "probability": 0.3384449522008815,
+      "covered_paths": [
+        "主队90分钟净胜球 -1 > 0"
+      ],
+      "handicap": {
+        "side": "home",
+        "line": -1,
+        "outcome": "side_win"
+      },
+      "rank": 3,
+      "model_probability_rank": 3,
+      "probability_source": "mcm_adjusted_score_matrix",
+      "evidence_grade": "B",
+      "strongest_contradiction": "model uncertainty and unobserved late information",
+      "capital_tiebreak": false
+    },
+    {
+      "market_type": "three_way_handicap",
+      "selection": "home_-1_handicap_draw",
+      "probability": 0.25214862450469266,
+      "covered_paths": [
+        "主队90分钟净胜球 -1 = 0"
+      ],
+      "handicap": {
+        "side": "home",
+        "line": -1,
+        "outcome": "handicap_draw"
+      },
+      "rank": 4,
+      "model_probability_rank": 4,
+      "probability_source": "mcm_adjusted_score_matrix",
+      "evidence_grade": "B",
+      "strongest_contradiction": "model uncertainty and unobserved late information",
+      "capital_tiebreak": false
+    },
+    {
+      "market_type": "1X2",
+      "selection": "draw",
+      "probability": 0.21861719693301218,
+      "covered_paths": [
+        "90m_draw"
+      ],
+      "rank": 5,
+      "model_probability_rank": 5,
+      "probability_source": "mcm_adjusted_score_matrix",
+      "evidence_grade": "B",
+      "strongest_contradiction": "model uncertainty and unobserved late information",
+      "capital_tiebreak": false
+    },
+    {
+      "market_type": "1X2",
+      "selection": "away",
+      "probability": 0.19078922636141318,
+      "covered_paths": [
+        "90m_away"
+      ],
+      "rank": 6,
+      "model_probability_rank": 6,
+      "probability_source": "mcm_adjusted_score_matrix",
+      "evidence_grade": "B",
+      "strongest_contradiction": "model uncertainty and unobserved late information",
+      "capital_tiebreak": false
+    }
+  ],
+  "market_quality": {
+    "ordinary_1x2_offers": [
+      {
+        "bookmaker": "synthetic-book-a",
+        "observed_at": "2026-10-10T10:00:00+08:00",
+        "inverse_price_sum": 1.0421888053467,
+        "overround": 0.04218880534670011,
+        "market_proxy_return": 0.9595190380761522
+      },
+      {
+        "bookmaker": "synthetic-book-b",
+        "observed_at": "2026-10-10T10:30:00+08:00",
+        "inverse_price_sum": 1.046425913202794,
+        "overround": 0.04642591320279399,
+        "market_proxy_return": 0.955633826898745
+      }
+    ],
+    "three_way_handicap_offers": [],
+    "exact_total_offer": {
+      "observed_at": "2026-10-10T10:30:00+08:00",
+      "inverse_price_sum": 1.2215587044534413,
+      "overround": 0.22155870445344128,
+      "market_proxy_return": 0.8186262324964786
+    },
+    "top_two_settlement": {
+      "status": "assessed",
+      "guaranteed_at_least_one": true,
+      "identical_settlement": false,
+      "overlap_exists": false,
+      "uncovered_margin_examples": [],
+      "interpretation": "top-two coverage is not an independent prediction hit rate"
+    },
+    "value_status": "unproven_without_independent_calibrated_probability",
+    "grade_meaning": "evidence_completeness_only_not_expected_return"
+  },
+  "ranking_counterfactual": {
+    "without_capital": [
+      {
+        "market_type": "1X2",
+        "selection": "home",
+        "probability": 0.5905935767055746,
+        "covered_paths": [
+          "90m_home"
+        ],
+        "rank": 1,
+        "model_probability_rank": 1,
+        "probability_source": "mcm_adjusted_score_matrix",
+        "evidence_grade": "B",
+        "strongest_contradiction": "model uncertainty and unobserved late information",
+        "capital_tiebreak": false
+      },
+      {
+        "market_type": "three_way_handicap",
+        "selection": "home_-1_side_loss",
+        "probability": 0.40940642329442567,
+        "covered_paths": [
+          "主队90分钟净胜球 -1 < 0"
+        ],
+        "handicap": {
+          "side": "home",
+          "line": -1,
+          "outcome": "side_loss"
+        },
+        "rank": 2,
+        "model_probability_rank": 2,
+        "probability_source": "mcm_adjusted_score_matrix",
+        "evidence_grade": "B",
+        "strongest_contradiction": "model uncertainty and unobserved late information",
+        "capital_tiebreak": false
+      },
+      {
+        "market_type": "three_way_handicap",
+        "selection": "home_-1_side_win",
+        "probability": 0.3384449522008815,
+        "covered_paths": [
+          "主队90分钟净胜球 -1 > 0"
+        ],
+        "handicap": {
+          "side": "home",
+          "line": -1,
+          "outcome": "side_win"
+        },
+        "rank": 3,
+        "model_probability_rank": 3,
+        "probability_source": "mcm_adjusted_score_matrix",
+        "evidence_grade": "B",
+        "strongest_contradiction": "model uncertainty and unobserved late information",
+        "capital_tiebreak": false
+      },
+      {
+        "market_type": "three_way_handicap",
+        "selection": "home_-1_handicap_draw",
+        "probability": 0.25214862450469266,
+        "covered_paths": [
+          "主队90分钟净胜球 -1 = 0"
+        ],
+        "handicap": {
+          "side": "home",
+          "line": -1,
+          "outcome": "handicap_draw"
+        },
+        "rank": 4,
+        "model_probability_rank": 4,
+        "probability_source": "mcm_adjusted_score_matrix",
+        "evidence_grade": "B",
+        "strongest_contradiction": "model uncertainty and unobserved late information",
+        "capital_tiebreak": false
+      },
+      {
+        "market_type": "1X2",
+        "selection": "draw",
+        "probability": 0.21861719693301218,
+        "covered_paths": [
+          "90m_draw"
+        ],
+        "rank": 5,
+        "model_probability_rank": 5,
+        "probability_source": "mcm_adjusted_score_matrix",
+        "evidence_grade": "B",
+        "strongest_contradiction": "model uncertainty and unobserved late information",
+        "capital_tiebreak": false
+      },
+      {
+        "market_type": "1X2",
+        "selection": "away",
+        "probability": 0.19078922636141318,
+        "covered_paths": [
+          "90m_away"
+        ],
+        "rank": 6,
+        "model_probability_rank": 6,
+        "probability_source": "mcm_adjusted_score_matrix",
+        "evidence_grade": "B",
+        "strongest_contradiction": "model uncertainty and unobserved late information",
+        "capital_tiebreak": false
+      }
+    ],
+    "with_capital": [
+      {
+        "market_type": "1X2",
+        "selection": "home",
+        "probability": 0.5905935767055746,
+        "covered_paths": [
+          "90m_home"
+        ],
+        "rank": 1,
+        "model_probability_rank": 1,
+        "probability_source": "mcm_adjusted_score_matrix",
+        "evidence_grade": "B",
+        "strongest_contradiction": "model uncertainty and unobserved late information",
+        "capital_tiebreak": false
+      },
+      {
+        "market_type": "three_way_handicap",
+        "selection": "home_-1_side_loss",
+        "probability": 0.40940642329442567,
+        "covered_paths": [
+          "主队90分钟净胜球 -1 < 0"
+        ],
+        "handicap": {
+          "side": "home",
+          "line": -1,
+          "outcome": "side_loss"
+        },
+        "rank": 2,
+        "model_probability_rank": 2,
+        "probability_source": "mcm_adjusted_score_matrix",
+        "evidence_grade": "B",
+        "strongest_contradiction": "model uncertainty and unobserved late information",
+        "capital_tiebreak": false
+      },
+      {
+        "market_type": "three_way_handicap",
+        "selection": "home_-1_side_win",
+        "probability": 0.3384449522008815,
+        "covered_paths": [
+          "主队90分钟净胜球 -1 > 0"
+        ],
+        "handicap": {
+          "side": "home",
+          "line": -1,
+          "outcome": "side_win"
+        },
+        "rank": 3,
+        "model_probability_rank": 3,
+        "probability_source": "mcm_adjusted_score_matrix",
+        "evidence_grade": "B",
+        "strongest_contradiction": "model uncertainty and unobserved late information",
+        "capital_tiebreak": false
+      },
+      {
+        "market_type": "three_way_handicap",
+        "selection": "home_-1_handicap_draw",
+        "probability": 0.25214862450469266,
+        "covered_paths": [
+          "主队90分钟净胜球 -1 = 0"
+        ],
+        "handicap": {
+          "side": "home",
+          "line": -1,
+          "outcome": "handicap_draw"
+        },
+        "rank": 4,
+        "model_probability_rank": 4,
+        "probability_source": "mcm_adjusted_score_matrix",
+        "evidence_grade": "B",
+        "strongest_contradiction": "model uncertainty and unobserved late information",
+        "capital_tiebreak": false
+      },
+      {
+        "market_type": "1X2",
+        "selection": "draw",
+        "probability": 0.21861719693301218,
+        "covered_paths": [
+          "90m_draw"
+        ],
+        "rank": 5,
+        "model_probability_rank": 5,
+        "probability_source": "mcm_adjusted_score_matrix",
+        "evidence_grade": "B",
+        "strongest_contradiction": "model uncertainty and unobserved late information",
+        "capital_tiebreak": false
+      },
+      {
+        "market_type": "1X2",
+        "selection": "away",
+        "probability": 0.19078922636141318,
+        "covered_paths": [
+          "90m_away"
+        ],
+        "rank": 6,
+        "model_probability_rank": 6,
+        "probability_source": "mcm_adjusted_score_matrix",
+        "evidence_grade": "B",
+        "strongest_contradiction": "model uncertainty and unobserved late information",
+        "capital_tiebreak": false
+      }
+    ],
+    "applied": false,
+    "max_probability_gap": 0.02,
+    "probabilities_changed": false,
+    "reason": "capital direction already leads the probability ranking"
+  },
+  "candidate_relationship": "alternative_paths_not_combination",
+  "scenarios": {
+    "mainstream": {
+      "market_type": "1X2",
+      "selection": "home",
+      "probability": 0.5905935767055746,
+      "covered_paths": [
+        "90m_home"
+      ],
+      "rank": 1,
+      "model_probability_rank": 1,
+      "probability_source": "mcm_adjusted_score_matrix",
+      "evidence_grade": "B",
+      "strongest_contradiction": "model uncertainty and unobserved late information",
+      "capital_tiebreak": false
+    },
+    "contrarian": {
+      "market_type": "1X2",
+      "selection": "draw",
+      "probability": 0.21861719693301218,
+      "covered_paths": [
+        "90m_draw"
+      ],
+      "rank": 5,
+      "model_probability_rank": 5,
+      "probability_source": "mcm_adjusted_score_matrix",
+      "evidence_grade": "B",
+      "strongest_contradiction": "model uncertainty and unobserved late information",
+      "capital_tiebreak": false
+    },
+    "tail_risk": {
+      "market_type": "goal_band",
+      "selection": "7+",
+      "probability": 0.02465349529783441
+    }
+  },
+  "asian_handicap": {
+    "present": false,
+    "kept_separate": true,
+    "orientation_verified": null,
+    "odds_format": null,
+    "ah_grade": "N/A"
+  },
+  "capital_intent": {
+    "freeze_time": "2026-10-10T12:00:00+08:00",
+    "market_only_direction": "home",
+    "sporting_baseline_direction": "home",
+    "attraction": {
+      "direction": "home",
+      "evidence": [
+        "home-favourite narrative is visible; funded crowding is unknown"
+      ]
+    },
+    "protection": {
+      "direction": "home",
+      "evidence": [
+        "two independent synthetic books retain home-side resistance"
+      ]
+    },
+    "feasibility": {
+      "direction": "home",
+      "evidence": [
+        "independent score matrix remains home-leading"
+      ]
+    },
+    "attraction_basis": "explicit",
+    "leg_independence": {
+      "attraction": false,
+      "protection": false,
+      "feasibility": true
+    },
+    "loop_status": "partial",
+    "ci_grade": "CI-2",
+    "capital_direction": "home",
+    "combined_direction": "home",
+    "without_capital_direction": "home",
+    "incremental_effect": "strengthened",
+    "independent_evidence_groups": [
+      "independent sporting baseline",
+      "cross-book market structure"
+    ],
+    "candidate_label": "straight_support_candidate",
+    "red_team_passed": true,
+    "hypothesis_status": "explicit_card_unscored",
+    "non_intent_alternative": "ordinary repricing, model disagreement, liquidity or stale quotes",
+    "strongest_support": "sporting and cross-book directions align",
+    "strongest_contradiction": "draw probability remains material",
+    "falsifier": "verified late absence reverses the independent direction",
+    "reorder_condition": "two independent evidence groups reverse before kickoff",
+    "diagnostics": {
+      "mode": "explicit"
+    }
+  },
+  "positioning": {
+    "narrative_signals": [
+      {
+        "direction": "home",
+        "claim": "synthetic home-favourite story"
+      }
+    ],
+    "measured_positions": [],
+    "evidence_level": "narrative_only_or_unavailable"
+  },
+  "historical_shadow": {
+    "mode": "observe_only",
+    "stable_weights_changed": false,
+    "rules": [
+      {
+        "rule_version": "direction-correct-margin-guard-v2",
+        "status": "observe_only",
+        "triggered": true,
+        "probability_delta": 0,
+        "counterexample": "synthetic opposite-signal control remains"
+      }
+    ]
+  },
+  "next_phase_shadow": {
+    "schema_version": "mcm-next-phase-shadow/v1",
+    "engine_version": "1.8.0-shadow",
+    "mode": "observe_only",
+    "status": "unavailable",
+    "stable_weights_changed": false,
+    "probability_delta_applied": 0,
+    "live_ranking_changed": false,
+    "reason": "provider-neutral completed-match history unavailable"
+  },
+  "top_scores": [
+    {
+      "score": "1-0",
+      "probability": 0.11483208699521098
+    },
+    {
+      "score": "2-0",
+      "probability": 0.10433881008013138
+    },
+    {
+      "score": "1-1",
+      "probability": 0.10384290283636514
+    }
+  ],
+  "half_full": [
+    [
+      "home/home",
+      0.37274766549555705
+    ],
+    [
+      "draw/home",
+      0.1881518886911103
+    ]
+  ],
+  "value_grade": "B",
+  "value_grade_meaning": "legacy_evidence_completeness_cap_not_expected_return",
+  "strongest_falsifier": "verified late absence reverses the independent direction",
+  "reorder_condition": "two independent evidence groups reverse before kickoff",
+  "validation_warnings": [
+    "preaggregated baseline lacks completed-match sample audit"
+  ]
+}
+

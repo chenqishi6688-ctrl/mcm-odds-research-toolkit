@@ -1,0 +1,169 @@
+{
+  "schema_version": "mcm-full-batch/v1",
+  "historical_shadow": {
+    "mode": "observe_only",
+    "stable_weights_changed": false,
+    "rules": [
+      {
+        "rule_version": "direction-correct-margin-guard-v2",
+        "status": "observe_only",
+        "triggered": true,
+        "probability_delta": 0,
+        "counterexample": "synthetic opposite-signal control remains"
+      }
+    ]
+  },
+  "fixtures": [
+    {
+      "event": {
+        "id": "full-mcm-synthetic-001",
+        "home": "Synthetic Home",
+        "away": "Synthetic Away",
+        "kickoff": "2026-10-10T20:00:00+08:00",
+        "timezone": "Asia/Shanghai",
+        "horizon": "90m"
+      },
+      "analysis_freeze_time": "2026-10-10T12:00:00+08:00",
+      "sources": [
+        "synthetic team-performance feed",
+        "synthetic league environment",
+        "synthetic book A",
+        "synthetic book B"
+      ],
+      "independent_baseline_input": {
+        "candidate_version": "1.5.0-candidate",
+        "event_id": "full-mcm-synthetic-001",
+        "horizon": "90m",
+        "freeze_time": "2026-10-10T09:00:00+08:00",
+        "kickoff": "2026-10-10T20:00:00+08:00",
+        "uses_audited_market": false,
+        "source_records": [
+          {
+            "source": "synthetic team-performance feed",
+            "observed_at": "2026-10-10T08:00:00+08:00",
+            "ingested_at": "2026-10-10T08:01:00+08:00",
+            "metric_group": "team-form"
+          },
+          {
+            "source": "synthetic league environment",
+            "observed_at": "2026-10-10T08:10:00+08:00",
+            "ingested_at": "2026-10-10T08:11:00+08:00",
+            "metric_group": "league-environment"
+          }
+        ],
+        "league": {
+          "home_xg": 1.45,
+          "away_xg": 1.18,
+          "first_half_share": 0.45
+        },
+        "home": {"xgf_home": 1.7, "xga_home": 1.05},
+        "away": {"xgf_away": 1.1, "xga_away": 1.55},
+        "adjustments": {
+          "home": {"multiplier": 1.0},
+          "away": {"multiplier": 1.0}
+        },
+        "three_way_handicaps": [{"side": "home", "line": -1}]
+      },
+      "market_observations": [
+        {
+          "bookmaker": "synthetic-book-a",
+          "observed_at": "2026-10-10T10:00:00+08:00",
+          "prices": {"home": 1.9, "draw": 3.6, "away": 4.2}
+        },
+        {
+          "bookmaker": "synthetic-book-b",
+          "observed_at": "2026-10-10T10:30:00+08:00",
+          "prices": {"home": 1.92, "draw": 3.55, "away": 4.1}
+        }
+      ],
+      "exact_total_market": {
+        "observed_at": "2026-10-10T10:30:00+08:00",
+        "odds": {
+          "0": 18.0,
+          "1": 6.5,
+          "2": 3.8,
+          "3": 3.6,
+          "4": 4.8,
+          "5": 7.5,
+          "6": 13.0,
+          "7+": 19.0
+        }
+      },
+      "sporting_adjustments": [
+        {
+          "direction": "home",
+          "delta": 0.02,
+          "reason": "verified squad availability improvement",
+          "evidence_group": "availability",
+          "source": "synthetic team status feed",
+          "observed_at": "2026-10-10T11:00:00+08:00"
+        },
+        {
+          "direction": "draw",
+          "delta": -0.01,
+          "reason": "verified squad availability improvement",
+          "evidence_group": "availability",
+          "source": "synthetic team status feed",
+          "observed_at": "2026-10-10T11:00:00+08:00"
+        },
+        {
+          "direction": "away",
+          "delta": -0.01,
+          "reason": "verified squad availability improvement",
+          "evidence_group": "availability",
+          "source": "synthetic team status feed",
+          "observed_at": "2026-10-10T11:00:00+08:00"
+        }
+      ],
+      "monitoring": {
+        "required_checkpoints": 4,
+        "captured_checkpoints": 4,
+        "late_snapshot_available": true
+      },
+      "positioning": {
+        "narrative_signals": [
+          {"direction": "home", "claim": "synthetic home-favourite story"}
+        ],
+        "measured_positions": []
+      },
+      "capital_intent": {
+        "attraction": {
+          "direction": "home",
+          "evidence": ["home-favourite narrative is visible; funded crowding is unknown"]
+        },
+        "protection": {
+          "direction": "home",
+          "evidence": ["two independent synthetic books retain home-side resistance"]
+        },
+        "feasibility": {
+          "direction": "home",
+          "evidence": ["independent score matrix remains home-leading"]
+        },
+        "loop_status": "closed",
+        "ci_grade": "CI-2",
+        "capital_direction": "home",
+        "combined_direction": "home",
+        "without_capital_direction": "home",
+        "incremental_effect": "strengthened",
+        "independent_evidence_groups": [
+          "independent sporting baseline",
+          "cross-book market structure"
+        ],
+        "candidate_label": "straight_support_candidate",
+        "red_team_passed": true,
+        "strongest_support": "sporting and cross-book directions align",
+        "strongest_contradiction": "draw probability remains material",
+        "falsifier": "verified late absence reverses the independent direction",
+        "reorder_condition": "two independent evidence groups reverse before kickoff"
+      },
+      "asian_handicap": {
+        "present": false,
+        "kept_separate": true,
+        "orientation_verified": null,
+        "odds_format": null,
+        "ah_grade": "N/A"
+      }
+    }
+  ]
+}
+

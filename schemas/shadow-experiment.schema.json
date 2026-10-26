@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.codex/mcm/shadow-experiment-v1.schema.json",
+  "title": "MCM preregistered shadow experiment",
+  "type": "object",
+  "required": ["experiment_id", "hypothesis", "feature_set", "training_window", "validation_window", "test_window", "test_event_id", "primary_metric", "regression_segments", "rollback_rule"],
+  "properties": {
+    "experiment_id": {"type": "string", "minLength": 1},
+    "hypothesis": {"type": "string", "minLength": 1},
+    "feature_set": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+    "training_window": {"$ref": "#/$defs/window"},
+    "validation_window": {"$ref": "#/$defs/window"},
+    "test_window": {"$ref": "#/$defs/window"},
+    "test_event_id": {"type": "string", "minLength": 1},
+    "primary_metric": {"enum": ["1x2_log_loss", "1x2_brier", "1x2_rps", "goal_band_log_loss"]},
+    "regression_segments": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+    "rollback_rule": {"type": "string", "minLength": 1}
+  },
+  "$defs": {
+    "window": {
+      "type": "object",
+      "required": ["start", "end"],
+      "properties": {"start": {"type": "string", "format": "date-time"}, "end": {"type": "string", "format": "date-time"}},
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": true
+}
+

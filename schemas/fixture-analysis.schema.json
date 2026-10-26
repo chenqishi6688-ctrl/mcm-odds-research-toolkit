@@ -1,0 +1,331 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.codex/mcm/fixture-analysis-v1.6.3.schema.json",
+  "title": "MCM fixture analysis record",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "event",
+    "report_status",
+    "data_quality",
+    "probabilities",
+    "baseline_provenance",
+    "ordinary_1x2_coverage",
+    "three_way_handicap_coverage",
+    "candidate_pool_scope",
+    "unified_ranking",
+    "ranking_counterfactual",
+    "asian_handicap",
+    "capital_intent",
+    "value_grade",
+    "strongest_falsifier",
+    "reorder_condition"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.6.3"},
+    "event": {
+      "type": "object",
+      "required": ["id", "home", "away", "kickoff", "timezone", "horizon"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "home": {"type": "string", "minLength": 1},
+        "away": {"type": "string", "minLength": 1},
+        "kickoff": {"type": "string", "minLength": 1},
+        "timezone": {"type": "string", "minLength": 1},
+        "horizon": {"const": "90m"}
+      },
+      "additionalProperties": true
+    },
+    "report_status": {
+      "enum": ["FULL-MCM", "MCM-DEGRADED", "MARKET-STRUCTURE-ONLY", "BLOCKED"]
+    },
+    "data_quality": {
+      "type": "object",
+      "required": [
+        "grade",
+        "independent_baseline_available",
+        "cross_book_available",
+        "late_snapshot_available",
+        "required_checkpoints",
+        "captured_checkpoints",
+        "sources"
+      ],
+      "properties": {
+        "grade": {"enum": ["A", "B", "C", "D"]},
+        "independent_baseline_available": {"type": "boolean"},
+        "cross_book_available": {"type": "boolean"},
+        "late_snapshot_available": {"type": "boolean"},
+        "required_checkpoints": {"type": "integer", "minimum": 0},
+        "captured_checkpoints": {"type": "integer", "minimum": 0},
+        "blockers": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "sources": {"type": "array", "items": {"type": "string"}}
+      },
+      "additionalProperties": true
+    },
+    "probabilities": {
+      "type": "object",
+      "required": ["market_implied", "independent_baseline", "mcm_adjusted"],
+      "properties": {
+        "market_implied": {"$ref": "#/$defs/probabilityLayerOrNull"},
+        "independent_baseline": {"$ref": "#/$defs/probabilityLayerOrNull"},
+        "mcm_adjusted": {"$ref": "#/$defs/probabilityLayerOrNull"}
+      }
+    },
+    "ordinary_1x2_coverage": {
+      "type": "object",
+      "required": ["status", "candidate_pool_complete", "source_timestamp", "reason"],
+      "properties": {
+        "status": {"enum": ["observed", "not_displayed", "unreadable_or_unverified"]},
+        "candidate_pool_complete": {"type": "boolean"},
+        "source_timestamp": {"type": ["string", "null"]},
+        "reason": {"type": "string"}
+      },
+      "additionalProperties": true
+    },
+    "three_way_handicap_coverage": {
+      "type": "object",
+      "required": ["status", "observed_markets", "candidate_pool_complete", "source_timestamp", "reason"],
+      "properties": {
+        "status": {"enum": ["observed", "not_displayed", "unreadable_or_unverified"]},
+        "observed_markets": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["side", "line"],
+            "properties": {
+              "side": {"enum": ["home", "away"]},
+              "line": {"type": "integer"}
+            },
+            "additionalProperties": true
+          }
+        },
+        "candidate_pool_complete": {"type": "boolean"},
+        "source_timestamp": {"type": ["string", "null"]},
+        "reason": {"type": "string"}
+      },
+      "additionalProperties": true
+    },
+    "candidate_pool_scope": {"enum": ["unified", "handicap_only"]},
+    "unified_ranking": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["rank", "market_type", "selection", "probability", "probability_source", "covered_paths", "evidence_grade", "strongest_contradiction"],
+        "properties": {
+          "rank": {"type": "integer", "minimum": 1},
+          "market_type": {"enum": ["1X2", "three_way_handicap"]},
+          "selection": {"type": "string", "minLength": 1},
+          "probability": {"type": "number", "minimum": 0, "maximum": 1},
+          "probability_source": {"enum": ["market_implied", "independent_score_matrix", "mcm_adjusted_score_matrix"]},
+          "covered_paths": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+          "evidence_grade": {"enum": ["A", "B", "C", "D"]},
+          "strongest_contradiction": {"type": "string"},
+          "handicap": {
+            "type": ["object", "null"],
+            "properties": {
+              "side": {"enum": ["home", "away"]},
+              "line": {"type": "integer"},
+              "outcome": {"enum": ["side_win", "handicap_draw", "side_loss"]}
+            },
+            "required": ["side", "line", "outcome"]
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "baseline_provenance": {"type": ["object", "null"]},
+    "ranking_counterfactual": {
+      "type": "object",
+      "required": ["without_capital", "with_capital", "applied", "max_probability_gap", "probabilities_changed", "reason"],
+      "properties": {
+        "without_capital": {"type": "array"},
+        "with_capital": {"type": "array"},
+        "applied": {"type": "boolean"},
+        "max_probability_gap": {"type": "number", "minimum": 0, "maximum": 0.05},
+        "probabilities_changed": {"const": false},
+        "reason": {"type": "string", "minLength": 1}
+      }
+    },
+    "asian_handicap": {
+      "type": "object",
+      "required": ["present", "kept_separate"],
+      "properties": {
+        "present": {"type": "boolean"},
+        "kept_separate": {"const": true},
+        "orientation_verified": {"type": ["boolean", "null"]},
+        "odds_format": {"type": ["string", "null"]},
+        "ah_grade": {"enum": ["AH-A", "AH-B", "AH-C", "AH-D", "N/A"]}
+      },
+      "additionalProperties": true
+    },
+    "capital_intent": {
+      "type": "object",
+      "required": [
+        "freeze_time",
+        "market_only_direction",
+        "sporting_baseline_direction",
+        "attraction",
+        "protection",
+        "feasibility",
+        "loop_status",
+        "ci_grade",
+        "capital_direction",
+        "combined_direction",
+        "without_capital_direction",
+        "incremental_effect",
+        "independent_evidence_groups",
+        "candidate_label",
+        "red_team_passed",
+        "hypothesis_status",
+        "non_intent_alternative",
+        "diagnostics",
+        "attraction_basis",
+        "leg_independence",
+        "strongest_support",
+        "strongest_contradiction",
+        "falsifier",
+        "reorder_condition"
+      ],
+      "properties": {
+        "freeze_time": {"type": "string", "minLength": 1},
+        "market_only_direction": {"type": "string"},
+        "sporting_baseline_direction": {"type": ["string", "null"]},
+        "attraction": {"$ref": "#/$defs/directionEvidence"},
+        "protection": {"$ref": "#/$defs/directionEvidence"},
+        "feasibility": {"$ref": "#/$defs/directionEvidence"},
+        "loop_status": {"enum": ["closed", "partial", "broken", "none"]},
+        "ci_grade": {"enum": ["CI-0", "CI-1", "CI-2", "CI-3"]},
+        "capital_direction": {"type": ["string", "null"]},
+        "combined_direction": {"type": ["string", "null"]},
+        "without_capital_direction": {"type": ["string", "null"]},
+        "incremental_effect": {"enum": ["changed", "strengthened", "weakened", "none", "unavailable"]},
+        "independent_evidence_groups": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "candidate_label": {"enum": ["straight_support_candidate", "inducement_candidate", "upset_candidate", "unresolved", "none"]},
+        "red_team_passed": {"type": "boolean"},
+        "hypothesis_status": {"type": "string", "minLength": 1},
+        "non_intent_alternative": {"type": "string", "minLength": 1},
+        "diagnostics": {"type": "object"},
+        "attraction_basis": {"enum": ["measured_positioning", "independent_narrative", "market_price_accessibility", "unavailable", "explicit"]},
+        "leg_independence": {
+          "type": "object",
+          "required": ["attraction", "protection", "feasibility"],
+          "properties": {
+            "attraction": {"type": "boolean"},
+            "protection": {"type": "boolean"},
+            "feasibility": {"type": "boolean"}
+          },
+          "additionalProperties": false
+        },
+        "strongest_support": {"type": "string"},
+        "strongest_contradiction": {"type": "string"},
+        "falsifier": {"type": "string"},
+        "reorder_condition": {"type": "string"}
+      },
+      "additionalProperties": true
+    },
+    "value_grade": {"enum": ["A", "B", "C", "D"]},
+    "strongest_falsifier": {"type": "string"},
+    "reorder_condition": {"type": "string"}
+    ,"next_phase_shadow": {
+      "type": "object",
+      "required": ["schema_version", "mode", "status", "stable_weights_changed", "probability_delta_applied", "live_ranking_changed"],
+      "properties": {
+        "schema_version": {"const": "mcm-next-phase-shadow/v1"},
+        "mode": {"const": "observe_only"},
+        "status": {"enum": ["available", "unavailable"]},
+        "stable_weights_changed": {"const": false},
+        "probability_delta_applied": {"const": 0},
+        "live_ranking_changed": {"const": false},
+        "capital_threshold_shadow": {
+          "type": "object",
+          "required": ["mode", "applied", "calibration_required", "probability_delta_applied"],
+          "properties": {
+            "mode": {"const": "observe_only"},
+            "applied": {"const": false},
+            "calibration_required": {"const": true},
+            "probability_delta_applied": {"const": 0}
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "directionEvidence": {
+      "type": "object",
+      "required": ["direction", "evidence"],
+      "properties": {
+        "direction": {"type": ["string", "null"]},
+        "evidence": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "probabilityLayerOrNull": {
+      "anyOf": [
+        {"type": "null"},
+        {
+          "type": "object",
+          "required": ["one_x_two", "goal_bands", "method", "freeze_time"],
+          "properties": {
+            "one_x_two": {
+              "anyOf": [
+                {"type": "null"},
+                {
+                  "type": "object",
+                  "required": ["home", "draw", "away"],
+                  "properties": {
+                    "home": {"type": "number", "minimum": 0, "maximum": 1},
+                    "draw": {"type": "number", "minimum": 0, "maximum": 1},
+                    "away": {"type": "number", "minimum": 0, "maximum": 1}
+                  }
+                }
+              ]
+            },
+            "goal_bands": {
+              "type": "object",
+              "required": ["0-1", "2-3", "4-6", "7+"],
+              "properties": {
+                "0-1": {"type": "number", "minimum": 0, "maximum": 1},
+                "2-3": {"type": "number", "minimum": 0, "maximum": 1},
+                "4-6": {"type": "number", "minimum": 0, "maximum": 1},
+                "7+": {"type": "number", "minimum": 0, "maximum": 1}
+              }
+            },
+            "method": {"type": "string", "minLength": 1},
+            "freeze_time": {"type": "string", "minLength": 1},
+            "audited_market_used": {"type": "boolean"}
+            ,"three_way_handicaps": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["side", "line", "probabilities"],
+                "properties": {
+                  "side": {"enum": ["home", "away"]},
+                  "line": {"type": "integer"},
+                  "probabilities": {
+                    "type": "object",
+                    "required": ["side_win", "handicap_draw", "side_loss"],
+                    "properties": {
+                      "side_win": {"type": "number", "minimum": 0, "maximum": 1},
+                      "handicap_draw": {"type": "number", "minimum": 0, "maximum": 1},
+                      "side_loss": {"type": "number", "minimum": 0, "maximum": 1}
+                    }
+                  }
+                }
+              }
+            }
+            ,"adjustment_audit": {
+              "type": "object",
+              "required": ["status", "delta_one_x_two", "reason"],
+              "properties": {
+                "status": {"enum": ["applied", "no_qualifying_adjustment"]},
+                "delta_one_x_two": {"type": "object"},
+                "reason": {"type": "string", "minLength": 1}
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "additionalProperties": true
+}
+

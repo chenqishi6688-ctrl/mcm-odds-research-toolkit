@@ -1,0 +1,22 @@
+{
+  "schema_version": "mcm-freeze-manifest/v1",
+  "engine_version": "1.6.3+evidence1",
+  "created_at_utc": "2026-10-26T06:24:03.933202+00:00",
+  "source_batch_canonical_sha256": "0de86aee67efd4caf864b71d5378ba4fbc923c681db299bf67415882d72cc3a0",
+  "artifacts": {
+    "machine-records/full-mcm-synthetic-001.json": "49115b7ffa987fedd876321e0994066ac3abec1b36ca42ebddb63f9bb5cc13d9",
+    "report.zh-CN.md": "64120cc546560380a622e0d9be8917938e5083e25520696ad0ee05a5980b2a5f",
+    "validation.json": "f92136aefc80f4b402e515e09f9a3c371dfbb54e7b07fe3587effab352de95ab"
+  },
+  "fixtures": [
+    {
+      "fixture_id": "full-mcm-synthetic-001",
+      "kickoff": "2026-10-10T20:00:00+08:00",
+      "receipt_created_before_kickoff": false,
+      "monitoring_status": "unverified",
+      "independent_baseline_available": true
+    }
+  ],
+  "limitation": "Local checksum receipt only; not a trusted timestamp or tamper-proof storage."
+}
+
